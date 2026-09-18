@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ZombieParty.Models.HuntingLog>
+
+@{
+    ViewData["Title"] = "Hunting Logs";
+}
+
+<h1>Hunting Logs</h1>
+
+<p>
+    <a asp-action="Upsert" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table bg-white shadow">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Zombies
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @(item.Zombies?.Count ?? 0)
+                </td>
+
+                <td>
+                    <a asp-action="Upsert" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+```

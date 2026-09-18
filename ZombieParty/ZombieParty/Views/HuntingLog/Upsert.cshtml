@@ -1,0 +1,88 @@
+﻿@model ZombieParty.Models.HuntingLog
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Create" : "Update";
+}
+
+<h1>@(Model.Id == 0 ? "Create" : "Update")</h1>
+
+<h4>Hunting Log</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="bg-white shadow p-4 rounded">
+
+            ```
+            <form asp-action="Upsert" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="Id" hidden />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                @if (Model.Zombies != null && Model.Zombies.Any())
+                {
+                    <div class="form-group mb-3">
+                        <label class="control-label">Zombies</label>
+
+                        @foreach (var zombie in Model.Zombies)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       name="SelectedZombieIds"
+                                       value="@zombie.Id" />
+
+                                <label class="form-check-label">
+                                    @zombie.Name
+                                </label>
+                            </div>
+                        }
+                    </div>
+                }
+
+                <div class="mt-4">
+                    @if (Model.Id == 0)
+                    {
+                        <input type="submit"
+                               value="Create"
+                               class="btn btn-primary" />
+                    }
+                    else
+                    {
+                        <input type="submit"
+                               value="Update"
+                               class="btn btn-primary" />
+                    }
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+                        Back to List
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    ```
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
